@@ -5,7 +5,7 @@ import { systemPrompt } from "./prompt";
 const endpoint = "https://models.github.ai/inference";
 const model = "openai/gpt-4o-mini";
 
-export async function getAiResponse(userQuery: string) {
+export async function getAiResponse(userQuery: string, systemPrompt?: string) {
 
     const client = ModelClient(
         endpoint,
@@ -26,9 +26,7 @@ export async function getAiResponse(userQuery: string) {
         throw response.body.error;
     }
 
-    console.log(response.body.choices[0]!.message.content);
+    // console.log(response.body.choices[0]!.message.content);
     return response.body.choices[0]!.message.content;
 }
 
-
-getAiResponse("Give me resources to learn web development")
