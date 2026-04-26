@@ -43,7 +43,3 @@ export const promptTemplate = `
     {{USER_QUERY}}
     
 `
-
-export const webSearchingAgent = `
-    You are a smart assistant who have access to internet, user will ask a query and you have to find the best soruces to answer the query.
-`

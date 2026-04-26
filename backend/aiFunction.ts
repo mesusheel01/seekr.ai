@@ -5,7 +5,7 @@ import { systemPrompt } from "./prompt";
 const endpoint = "https://models.github.ai/inference";
 const model = "openai/gpt-4o-mini";
 
-export async function getAiResponse(userQuery: string, systemPrompt?: string) {
+export async function getAiResponse(userQuery: string) {
 
     const client = ModelClient(
         endpoint,
