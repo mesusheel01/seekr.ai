@@ -3,8 +3,9 @@ import dotenv from 'dotenv'
 import { getAiResponse } from './aiFunction';
 import { promptTemplate } from './prompt';
 import { tavily } from '@tavily/core';
-import { prisma } from './db';
+import Middleware from './middleware';
 dotenv.config()
+import cors from 'cors'
 
 
 const client = tavily({
@@ -12,6 +13,7 @@ const client = tavily({
 })
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 
@@ -23,17 +25,19 @@ app.post('/signup', async (req, res) => {
 
 })
 
-app.get('/conversations', async (req, res) => {
+app.get('/conversations', Middleware, async (req, res) => {
     // get all the conversations of the user
-
+    res.json({
+        userId: req.userId
+    })
 })
 
-app.get("/conversation/:conversationId", async (req, res) => {
+app.get("/conversation/:conversationId", Middleware, async (req, res) => {
     // get a particular conversation
 })
 
 
-app.post("/ask_ai", async (req, res) => {
+app.post("/ask_ai", Middleware, async (req, res) => {
     const userQuery = req.body["query"]
 
 
@@ -60,14 +64,14 @@ app.post("/ask_ai", async (req, res) => {
 })
 
 // route for follow up question
-app.post('/ask_ai/follow_up', async (req, res) => {
+app.post('/ask_ai/follow_up', Middleware, async (req, res) => {
     // Get the followup question
     // Send the last chat history to the llm and ask it to respond to the followup question
     // return the response
 })
 
 
-app.listen(3000, () => {
-    console.log(`Server is listening at http://localhost:${3000}`)
+app.listen(3001, () => {
+    console.log(`Server is listening at http://localhost:${3001}`)
 })
 
